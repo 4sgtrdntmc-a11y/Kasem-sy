@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>مغامرات كابتن قفزة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;900&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky1:#7EC8E3; --sky2:#C9EEF5;
+    --ground:#8B5A2B; --grass:#4CAF6D;
+    --ink:#22303A; --panel:#1E2B33;
+    --gold:#FFC93C; --coral:#FF6B5E; --mint:#3FC98A;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;overflow:hidden;background:#0d1418;}
+  body{font-family:'Cairo',sans-serif;color:#fff;}
+  #gameContainer{
+    position:relative;width:100vw;height:100vh;
+    display:flex;align-items:center;justify-content:center;
+  }
+  canvas{
+    background:linear-gradient(180deg,var(--sky1), var(--sky2));
+    max-width:100vw;max-height:100vh;
+    display:block;
+    image-rendering:pixelated;
+  }
+
+  #hud{
+    position:absolute;top:10px;left:10px;right:10px;
+    display:flex;justify-content:space-between;align-items:flex-start;
+    pointer-events:none;font-family:'Fredoka',sans-serif;
+  }
+  .hud-pill{
+    background:rgba(30,43,51,0.75);border-radius:12px;
+    padding:6px 12px;font-size:14px;font-weight:600;
+    display:flex;gap:10px;align-items:center;
+  }
+
+  #startScreen,#pauseOverlay,#gameOverScreen,#levelCompleteScreen{
+    position:absolute;inset:0;display:none;
+    align-items:center;justify-content:center;flex-direction:column;
+    background:rgba(13,20,24,0.88);text-align:center;padding:20px;
+  }
+  #startScreen.show,#pauseOverlay.show,#gameOverScreen.show,#levelCompleteScreen.show{display:flex;}
+  .title{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(24px,6vw,34px);margin:0 0 8px;}
+  .subtitle{font-size:14px;color:#B9C6CC;margin:0 0 24px;max-width:340px;}
+  .big-emoji{font-size:56px;margin-bottom:8px;}
+  .menu-btn{
+    font-family:'Fredoka',sans-serif;font-weight:600;font-size:16px;
+    background:var(--mint);color:#08261a;border:none;border-radius:999px;
+    padding:13px 34px;cursor:pointer;margin:6px;-webkit-tap-highlight-color:transparent;
+  }
+  .menu-btn.secondary{background:#33474F;color:#fff;}
+  .controls-hint{font-size:12px;color:#8FA0A7;margin-top:14px;}
+
+  /* touch controls */
+  #touchControls{
+    position:absolute;bottom:0;left:0;right:0;
+    display:flex;justify-content:space-between;padding:0 16px 22px;
+    pointer-events:none;
+  }
+  .tbtn{
+    pointer-events:auto;
+    width:64px;height:64px;border-radius:50%;
+    background:rgba(255,255,255,0.16);border:2px solid rgba(255,255,255,0.35);
+    color:#fff;font-size:26px;display:flex;align-items:center;justify-content:center;
+    -webkit-tap-highlight-color:transparent;user-select:none;
+  }
+  .tbtn:active{background:rgba(255,255,255,0.32);}
+  .dpad{display:flex;gap:12px;}
+  #pauseBtn{
+    position:absolute;top:10px;left:50%;transform:translateX(-50%);
+    background:rgba(30,43,51,0.75);border:none;color:#fff;border-radius:10px;
+    padding:6px 14px;font-size:13px;cursor:pointer;-webkit-tap-highlight-color:transparent;
+  }
+</style>
+</head>
+<body>
+<div id="gameContainer">
+  <canvas id="game" width="960" height="540"></canvas>
+
+  <div id="hud">
+    <div class="hud-pill">❤️ <span id="livesLabel">3</span></div>
+    <div class="hud-pill">🪙 <span id="coinsLabel">0</span></div>
+    <div class="hud-pill">🚩 المرحلة <span id="levelLabel">1</span></div>
+  </div>
+  <button id="pauseBtn">⏸ إيقاف</button>
+
+  <div id="startScreen" class="show">
+    <div class="big-emoji">🧢</div>
+    <p class="title">مغامرات كابتن قفزة</p>
+    <p class="subtitle">اقفز فوق الأعداء، اجمع العملات الذهبية، واصل لعلم النهاية في كل مرحلة لتفتح التالية!</p>
+    <button class="menu-btn" id="startBtn">ابدأ اللعب</button>
+    <p class="controls-hint">لوحة المفاتيح: الأسهم أو A/D للحركة، Space أو ↑ للقفز</p>
+  </div>
+
+  <div id="pauseOverlay">
+    <p class="title">⏸ إيقاف مؤقت</p>
+    <button class="menu-btn" id="resumeBtn">استكمال</button>
+    <button class="menu-btn secondary" id="restartFromPauseBtn">إعادة المرحلة</button>
+  </div>
+
+  <div id="gameOverScreen">
+    <div class="big-emoji">💥</div>
+    <p class="title">انتهت المحاولة!</p>
+    <p class="subtitle" id="gameOverSub">جمعت 0 عملة</p>
+    <button class="menu-btn" id="retryBtn">أعد المحاولة</button>
+  </div>
+
+  <div id="levelCompleteScreen">
+    <div class="big-emoji">🏆</div>
+    <p class="title" id="levelCompleteTitle">أحسنت! أكملت المرحلة</p>
+    <p class="subtitle" id="levelCompleteSub"></p>
+    <button class="menu-btn" id="nextLevelBtn">المرحلة التالية</button>
+  </div>
+
+  <div id="touchControls">
+    <div class="dpad">
+      <div class="tbtn" id="leftBtn">◀</div>
+      <div class="tbtn" id="rightBtn">▶</div>
+    </div>
+    <div class="tbtn" id="jumpBtn">⬆</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var canvas = document.getElementById('game');
+  var ctx = canvas.getContext('2d');
+  var W = canvas.width, H = canvas.height;
+  var GRAVITY = 0.62;
+  var GROUND_Y = H - 60;
+
+  // ---------- LEVEL DATA ----------
+  function buildLevels(){
+    return [
+      {
+        length: 2400,
+        platforms: [
+          {x:0,y:GROUND_Y,w:700,h:60},
+          {x:780,y:GROUND_Y,w:260,h:60},
+          {x:1120,y:GROUND_Y,w:400,h:60},
+          {x:1600,y:GROUND_Y,w:800,h:60},
+          {x:520,y:GROUND_Y-110,w:120,h:22},
+          {x:900,y:GROUND_Y-160,w:120,h:22},
+          {x:1250,y:GROUND_Y-120,w:140,h:22},
+          {x:1900,y:GROUND_Y-150,w:140,h:22}
+        ],
+        coins: [
+          {x:560,y:GROUND_Y-150},{x:600,y:GROUND_Y-150},
+          {x:820,y:GROUND_Y-40},{x:860,y:GROUND_Y-40},
+          {x:940,y:GROUND_Y-200},
+          {x:1160,y:GROUND_Y-40},{x:1200,y:GROUND_Y-40},{x:1240,y:GROUND_Y-40},
+          {x:1300,y:GROUND_Y-160},
+          {x:1650,y:GROUND_Y-40},{x:1700,y:GROUND_Y-40},
+          {x:1940,y:GROUND_Y-190}
+        ],
+        enemies: [
+          {x:850,y:GROUND_Y-30,range:[790,1020]},
+          {x:1300,y:GROUND_Y-30,range:[1140,1490]},
+          {x:1750,y:GROUND_Y-30,range:[1620,2350]}
+        ],
+        gaps: [[700,780],[1040,1120],[1520,1600]],
+        goalX: 2350
+      },
+      {
+        length: 3000,
+        platforms: [
+          {x:0,y:GROUND_Y,w:400,h:60},
+          {x:460,y:GROUND_Y,w:200,h:60},
+          {x:740,y:GROUND_Y,w:200,h:60},
+          {x:1020,y:GROUND_Y,w:260,h:60},
+          {x:1360,y:GROUND_Y,w:200,h:60},
+          {x:1640,y:GROUND_Y,w:260,h:60},
+          {x:1980,y:GROUND_Y,w:200,h:60},
+          {x:2260,y:GROUND_Y,w:740,h:60},
+          {x:250,y:GROUND_Y-120,w:110,h:22},
+          {x:520,y:GROUND_Y-160,w:110,h:22},
+          {x:800,y:GROUND_Y-110,w:110,h:22},
+          {x:1080,y:GROUND_Y-170,w:130,h:22},
+          {x:1420,y:GROUND_Y-120,w:110,h:22},
+          {x:1700,y:GROUND_Y-170,w:130,h:22},
+          {x:2020,y:GROUND_Y-120,w:110,h:22},
+          {x:2400,y:GROUND_Y-150,w:130,h:22},
+          {x:2650,y:GROUND_Y-190,w:130,h:22}
+        ],
+        coins: [
+          {x:280,y:GROUND_Y-160},{x:320,y:GROUND_Y-160},
+          {x:550,y:GROUND_Y-200},{x:590,y:GROUND_Y-200},
+          {x:830,y:GROUND_Y-150},
+          {x:1100,y:GROUND_Y-210},{x:1140,y:GROUND_Y-210},{x:1180,y:GROUND_Y-210},
+          {x:1450,y:GROUND_Y-160},
+          {x:1730,y:GROUND_Y-210},{x:1770,y:GROUND_Y-210},
+          {x:2050,y:GROUND_Y-160},
+          {x:2430,y:GROUND_Y-190},{x:2470,y:GROUND_Y-190},
+          {x:2680,y:GROUND_Y-230}
+        ],
+        enemies: [
+          {x:500,y:GROUND_Y-30,range:[470,650]},
+          {x:780,y:GROUND_Y-30,range:[750,930]},
+          {x:1400,y:GROUND_Y-30,range:[1370,1550]},
+          {x:2000,y:GROUND_Y-30,range:[1990,2170]},
+          {x:2500,y:GROUND_Y-30,range:[2270,2980]},
+          {x:2800,y:GROUND_Y-30,range:[2270,2980]}
+        ],
+        gaps: [[400,460],[660,740],[940,1020],[1280,1360],[1560,1640],[1900,1980],[2180,2260]],
+        goalX: 2960
+      },
+      {
+        length: 3400,
+        platforms: [
+          {x:0,y:GROUND_Y,w:320,h:60},
+          {x:380,y:GROUND_Y,w:160,h:60},
+          {x:620,y:GROUND_Y,w:160,h:60},
+          {x:860,y:GROUND_Y,w:160,h:60},
+          {x:1100,y:GROUND_Y,w:160,h:60},
+          {x:1340,y:GROUND_Y,w:160,h:60},
+          {x:1580,y:GROUND_Y,w:160,h:60},
+          {x:1820,y:GROUND_Y,w:160,h:60},
+          {x:2060,y:GROUND_Y,w:160,h:60},
+          {x:2300,y:GROUND_Y,w:1100,h:60},
+          {x:180,y:GROUND_Y-130,w:110,h:22},
+          {x:420,y:GROUND_Y-180,w:110,h:22},
+          {x:660,y:GROUND_Y-130,w:110,h:22},
+          {x:900,y:GROUND_Y-180,w:110,h:22},
+          {x:1140,y:GROUND_Y-130,w:110,h:22},
+          {x:1380,y:GROUND_Y-180,w:110,h:22},
+          {x:1620,y:GROUND_Y-130,w:110,h:22},
+          {x:1860,y:GROUND_Y-180,w:110,h:22},
+          {x:2100,y:GROUND_Y-130,w:110,h:22},
+          {x:2450,y:GROUND_Y-160,w:130,h:22},
+          {x:2700,y:GROUND_Y-200,w:130,h:22},
+          {x:2950,y:GROUND_Y-160,w:130,h:22}
+        ],
+        coins: [
+          {x:210,y:GROUND_Y-170},
+          {x:450,y:GROUND_Y-220},{x:490,y:GROUND_Y-220},
+          {x:690,y:GROUND_Y-170},
+          {x:930,y:GROUND_Y-220},{x:970,y:GROUND_Y-220},
+          {x:1170,y:GROUND_Y-170},
+          {x:1410,y:GROUND_Y-220},{x:1450,y:GROUND_Y-220},
+          {x:1650,y:GROUND_Y-170},
+          {x:1890,y:GROUND_Y-220},{x:1930,y:GROUND_Y-220},
+          {x:2130,y:GROUND_Y-170},
+          {x:2480,y:GROUND_Y-200},{x:2520,y:GROUND_Y-200},
+          {x:2730,y:GROUND_Y-240},
+          {x:2980,y:GROUND_Y-200},{x:3020,y:GROUND_Y-200}
+        ],
+        enemies: [
+          {x:420,y:GROUND_Y-30,range:[390,530]},
+          {x:660,y:GROUND_Y-30,range:[630,770]},
+          {x:900,y:GROUND_Y-30,range:[870,1010]},
+          {x:1140,y:GROUND_Y-30,range:[1110,1250]},
+          {x:1380,y:GROUND_Y-30,range:[1350,1490]},
+          {x:1620,y:GROUND_Y-30,range:[1590,1730]},
+          {x:1860,y:GROUND_Y-30,range:[1830,1970]},
+          {x:2100,y:GROUND_Y-30,range:[2070,2210]},
+          {x:2500,y:GROUND_Y-30,range:[2320,3380]},
+          {x:2900,y:GROUND_Y-30,range:[2320,3380]}
+        ],
+        gaps: [[320,380],[540,620],[780,860],[1020,1100],[1260,1340],[1500,1580],[1740,1820],[1980,2060],[2220,2300]],
+        goalX: 3360
+      }
+    ];
+  }
+
+  var levels = buildLevels();
+  var levelIdx = 0;
+  var lives = 3;
+  var coinsCollected = 0;
+  var running = false;
+  var paused = false;
+  var camX = 0;
+
+  var player, enemies, coins, platforms, gaps, goalX;
+  var keys = {left:false,right:false,jump:false};
+
+  function initLevel(idx){
+    var lv = levels[idx];
+    platforms = lv.platforms.map(function(p){ return {x:p.x,y:p.y,w:p.w,h:p.h}; });
+    coins = lv.coins.map(function(c){ return {x:c.x,y:c.y,r:10,taken:false}; });
+    enemies = lv.enemies.map(function(e){ return {x:e.x,y:e.y,w:30,h:30,dir:1,range:e.range,alive:true,speed:1.6}; });
+    gaps = lv.gaps;
+    goalX = lv.goalX;
+    player = {
+      x:40,y:GROUND_Y-40,w:32,h:40,
+      vx:0,vy:0,onGround:false,facing:1,
+      invuln:0, dead:false
+    };
+    camX = 0;
+    coinsCollected = 0;
+    document.getElementById('levelLabel').textContent = (idx+1);
+    updateHud();
+  }
+
+  function updateHud(){
+    document.getElementById('livesLabel').textContent = lives;
+    document.getElementById('coinsLabel').textContent = coinsCollected;
+  }
+
+  function rectsOverlap(a,b){
+    return a.x < b.x+b.w && a.x+a.w > b.x && a.y < b.y+b.h && a.y+a.h > b.y;
+  }
+
+  function inGap(x){
+    for(var i=0;i<gaps.length;i++){
+      if(x > gaps[i][0] && x < gaps[i][1]) return true;
+    }
+    return false;
+  }
+
+  function update(){
+    if(!running || paused) return;
+
+    // horizontal movement
+    var accel = 0.9, maxSpeed = 4.6, friction = 0.82;
+    if(keys.left){ player.vx -= accel; player.facing=-1; }
+    if(keys.right){ player.vx += accel; player.facing=1; }
+    if(!keys.left && !keys.right){ player.vx *= friction; }
+    if(player.vx > maxSpeed) player.vx = maxSpeed;
+    if(player.vx < -maxSpeed) player.vx = -maxSpeed;
+
+    // jump
+    if(keys.jump && player.onGround){
+      player.vy = -13.5;
+      player.onGround = false;
+    }
+
+    player.vy += GRAVITY;
+    if(player.vy > 18) player.vy = 18;
+
+    player.x += player.vx;
+    if(player.x < 0) player.x = 0;
+
+    // vertical collision
+    var prevY = player.y;
+    player.y += player.vy;
+    player.onGround = false;
+
+    platforms.forEach(function(p){
+      if(rectsOverlap(player,p)){
+        if(player.vy >= 0 && prevY + player.h <= p.y + 2){
+          player.y = p.y - player.h;
+          player.vy = 0;
+          player.onGround = true;
+        } else if(player.vy < 0 && prevY >= p.y + p.h - 2){
+          player.y = p.y + p.h;
+          player.vy = 0;
+        }
+      }
+    });
+
+    // horizontal collision (simple push-back against platform sides at similar height)
+    platforms.forEach(function(p){
+      if(rectsOverlap(player,p)){
+        var overlapTop = (prevY + player.h) - p.y;
+        var wasAbove = overlapTop <= 4;
+        if(!wasAbove){
+          if(player.vx > 0 && player.x + player.w - player.vx <= p.x + 2){
+            player.x = p.x - player.w;
+            player.vx = 0;
+          } else if(player.vx < 0 && player.x - player.vx >= p.x + p.w - 2){
+            player.x = p.x + p.w;
+            player.vx = 0;
+          }
+        }
+      }
+    });
+
+    // fell into a gap or off level
+    if(inGap(player.x + player.w/2) && player.y > GROUND_Y + 40){
+      loseLife();
+      return;
+    }
+    if(player.y > H + 100){
+      loseLife();
+      return;
+    }
+
+    // coins
+    coins.forEach(function(c){
+      if(!c.taken){
+        var dx = (player.x+player.w/2) - c.x;
+        var dy = (player.y+player.h/2) - c.y;
+        if(Math.sqrt(dx*dx+dy*dy) < 26){
+          c.taken = true;
+          coinsCollected++;
+          updateHud();
+        }
+      }
+    });
+
+    // enemies
+    if(player.invuln > 0) player.invuln--;
+    enemies.forEach(function(e){
+      if(!e.alive) return;
+      e.x += e.speed * e.dir;
+      if(e.x < e.range[0] || e.x + e.w > e.range[1]) e.dir *= -1;
+
+      var eBox = {x:e.x,y:e.y-30,w:e.w,h:30};
+      if(rectsOverlap(player, eBox)){
+        var stomp = player.vy > 0 && (player.y + player.h) - eBox.y < 18;
+        if(stomp){
+          e.alive = false;
+          player.vy = -9;
+        } else if(player.invuln <= 0){
+          loseLife();
+        }
+      }
+    });
+
+    // goal
+    if(player.x > goalX){
+      levelComplete();
+    }
+
+    // camera
+    var targetCam = player.x - W*0.35;
+    if(targetCam < 0) targetCam = 0;
+    var maxCam = levels[levelIdx].length - W;
+    if(targetCam > maxCam) targetCam = maxCam;
+    camX += (targetCam - camX) * 0.12;
+  }
+
+  function loseLife(){
+    lives--;
+    updateHud();
+    if(lives <= 0){
+      running = false;
+      document.getElementById('gameOverSub').textContent = 'جمعت ' + coinsCollected + ' عملة في هذه المحاولة';
+      document.getElementById('gameOverScreen').classList.add('show');
+    } else {
+      // respawn at level start position but keep coins collected reset for fairness
+      player.x = 40; player.y = GROUND_Y-40; player.vx=0; player.vy=0; player.invuln=90;
+      camX = 0;
+    }
+  }
+
+  function levelComplete(){
+    running = false;
+    var isLast = levelIdx >= levels.length - 1;
+    document.getElementById('levelCompleteTitle').textContent = isLast ? 'أنهيت جميع المراحل! أنت بطل 🎉' : 'أحسنت! أكملت المرحلة ' + (levelIdx+1);
+    document.getElementById('levelCompleteSub').textContent = 'جمعت ' + coinsCollected + ' عملة';
+    document.getElementById('nextLevelBtn').textContent = isLast ? 'إعادة من البداية' : 'المرحلة التالية';
+    document.getElementById('levelCompleteScreen').classList.add('show');
+  }
+
+  // ---------- DRAW ----------
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+
+    // parallax hills
+    ctx.fillStyle = 'rgba(255,255,255,0.5)';
+    for(var i=0;i<6;i++){
+      var hx = (i*400 - camX*0.4) % (W+400) - 200;
+      ctx.beginPath();
+      ctx.ellipse(hx, H-40, 160, 70, 0, 0, Math.PI*2);
+      ctx.fill();
+    }
+
+    ctx.save();
+    ctx.translate(-camX, 0);
+
+    // platforms
+    platforms.forEach(function(p){
+      ctx.fillStyle = '#8B5A2B';
+      ctx.fillRect(p.x, p.y, p.w, p.h);
+      ctx.fillStyle = '#4CAF6D';
+      ctx.fillRect(p.x, p.y, p.w, 12);
+    });
+
+    // coins
+    coins.forEach(function(c){
+      if(c.taken) return;
+      ctx.beginPath();
+      ctx.fillStyle = '#FFC93C';
+      ctx.arc(c.x, c.y, 10, 0, Math.PI*2);
+      ctx.fill();
+      ctx.strokeStyle = '#B8860B';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    });
+
+    // enemies
+    enemies.forEach(function(e){
+      if(!e.alive) return;
+      ctx.fillStyle = '#B5502D';
+      ctx.fillRect(e.x, e.y-30, e.w, 30);
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(e.x+6, e.y-22, 6, 6);
+      ctx.fillRect(e.x+e.w-12, e.y-22, 6, 6);
+    });
+
+    // goal flag
+    ctx.fillStyle = '#33474F';
+    ctx.fillRect(goalX+20, GROUND_Y-160, 6, 160);
+    ctx.fillStyle = '#3FC98A';
+    ctx.beginPath();
+    ctx.moveTo(goalX+26, GROUND_Y-160);
+    ctx.lineTo(goalX+70, GROUND_Y-140);
+    ctx.lineTo(goalX+26, GROUND_Y-120);
+    ctx.fill();
+
+    // player
+    if(player.invuln <=0 || Math.floor(player.invuln/6)%2===0){
+      ctx.save();
+      ctx.translate(player.x+player.w/2, player.y+player.h/2);
+      ctx.scale(player.facing,1);
+      ctx.fillStyle = '#3AA6E0';
+      ctx.fillRect(-player.w/2, -player.h/2+10, player.w, player.h-10);
+      ctx.fillStyle = '#F2C29A';
+      ctx.fillRect(-player.w/2+4, -player.h/2, player.w-8, 16);
+      ctx.fillStyle = '#FF6B5E';
+      ctx.fillRect(-player.w/2-2, -player.h/2-6, player.w+4, 8);
+      ctx.restore();
+    }
+
+    ctx.restore();
+  }
+
+  function loop(){
+    update();
+    draw();
+    requestAnimationFrame(loop);
+  }
+
+  // ---------- INPUT ----------
+  window.addEventListener('keydown', function(e){
+    if(['ArrowLeft','a','A'].includes(e.key)) keys.left = true;
+    if(['ArrowRight','d','D'].includes(e.key)) keys.right = true;
+    if(['ArrowUp','w','W',' '].includes(e.key)){ keys.jump = true; e.preventDefault(); }
+  });
+  window.addEventListener('keyup', function(e){
+    if(['ArrowLeft','a','A'].includes(e.key)) keys.left = false;
+    if(['ArrowRight','d','D'].includes(e.key)) keys.right = false;
+    if(['ArrowUp','w','W',' '].includes(e.key)) keys.jump = false;
+  });
+
+  function bindHold(el, onDown, onUp){
+    el.addEventListener('touchstart', function(ev){ ev.preventDefault(); onDown(); }, {passive:false});
+    el.addEventListener('touchend', function(ev){ ev.preventDefault(); onUp(); }, {passive:false});
+    el.addEventListener('mousedown', function(ev){ ev.preventDefault(); onDown(); });
+    el.addEventListener('mouseup', function(ev){ ev.preventDefault(); onUp(); });
+    el.addEventListener('mouseleave', function(){ onUp(); });
+  }
+  bindHold(document.getElementById('leftBtn'), function(){keys.left=true;}, function(){keys.left=false;});
+  bindHold(document.getElementById('rightBtn'), function(){keys.right=true;}, function(){keys.right=false;});
+  bindHold(document.getElementById('jumpBtn'), function(){keys.jump=true;}, function(){keys.jump=false;});
+
+  // ---------- SCREENS ----------
+  function hideAllOverlays(){
+    ['startScreen','pauseOverlay','gameOverScreen','levelCompleteScreen'].forEach(function(id){
+      document.getElementById(id).classList.remove('show');
+    });
+  }
+
+  document.getElementById('startBtn').addEventListener('click', function(){
+    hideAllOverlays();
+    levelIdx = 0; lives = 3;
+    initLevel(levelIdx);
+    running = true; paused = false;
+  });
+
+  document.getElementById('pauseBtn').addEventListener('click', function(){
+    if(!running) return;
+    paused = !paused;
+    document.getElementById('pauseOverlay').classList.toggle('show', paused);
+  });
+  document.getElementById('resumeBtn').addEventListener('click', function(){
+    paused = false;
+    document.getElementById('pauseOverlay').classList.remove('show');
+  });
+  document.getElementById('restartFromPauseBtn').addEventListener('click', function(){
+    hideAllOverlays();
+    lives = 3;
+    initLevel(levelIdx);
+    running = true; paused = false;
+  });
+
+  document.getElementById('retryBtn').addEventListener('click', function(){
+    hideAllOverlays();
+    lives = 3;
+    initLevel(levelIdx);
+    running = true; paused = false;
+  });
+
+  document.getElementById('nextLevelBtn').addEventListener('click', function(){
+    hideAllOverlays();
+    if(levelIdx >= levels.length - 1){
+      levelIdx = 0;
+    } else {
+      levelIdx++;
+    }
+    lives = 3;
+    initLevel(levelIdx);
+    running = true; paused = false;
+  });
+
+  initLevel(0);
+  draw();
+  loop();
+})();
+</script>
+</body>
+</html>
