@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دليل مواد ومستلزمات الإنتاج الزراعي 2026 — دائرة الزراعة والثروة الحيوانية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --soil:#2f3d2a;
+    --leaf:#4c6b3f;
+    --leaf-light:#7a9b64;
+    --wheat:#d8ab52;
+    --wheat-dark:#b8862f;
+    --cream:#f6f2e7;
+    --card:#ffffff;
+    --ink:#26301f;
+    --muted:#6b7263;
+    --line:#e3ddc8;
+    --danger:#a24b3c;
+    --radius:14px;
+    --shadow: 0 8px 24px -12px rgba(47,61,42,.25);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'IBM Plex Sans Arabic','Tajawal',sans-serif;
+    background:
+      radial-gradient(1200px 600px at 100% -10%, #eef2df 0%, transparent 60%),
+      var(--cream);
+    color:var(--ink);
+    min-height:100vh;
+    line-height:1.7;
+  }
+
+  /* ===== Header ===== */
+  header{
+    background: linear-gradient(135deg, var(--soil) 0%, var(--leaf) 100%);
+    color:#f4f1e6;
+    padding:2.4rem 1.5rem 5.5rem;
+    position:relative;
+    overflow:hidden;
+  }
+  header::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      repeating-linear-gradient(115deg, rgba(255,255,255,.035) 0 2px, transparent 2px 26px);
+    pointer-events:none;
+  }
+  .header-inner{
+    max-width:980px; margin:0 auto; position:relative; z-index:1;
+  }
+  .logo-badge{
+    display:inline-flex; align-items:center;
+    background:#fdfcf8;
+    border-radius:12px;
+    padding:.7rem 1.1rem;
+    box-shadow:0 6px 18px -6px rgba(0,0,0,.35);
+    margin-bottom:1.4rem;
+  }
+  .logo-badge img{
+    display:block;
+    height:52px;
+    width:auto;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:.5rem;
+    font-size:.8rem; letter-spacing:.04em; color:var(--wheat);
+    font-weight:600; margin-bottom:1rem;
+  }
+  .eyebrow::before{
+    content:"\2726"; color:var(--wheat);
+  }
+  h1{
+    font-family:'Tajawal',sans-serif;
+    font-weight:900;
+    font-size:clamp(1.6rem, 3.4vw, 2.5rem);
+    margin:0 0 .6rem;
+    line-height:1.35;
+  }
+  .subtitle{
+    color:#dfe6cf; font-size:1rem; max-width:60ch; margin:0;
+  }
+
+  /* ===== Selector card (overlaps header) ===== */
+  .selector-wrap{
+    max-width:980px; margin:-3.6rem auto 0; padding:0 1.5rem 2rem; position:relative; z-index:2;
+  }
+  .selector-card{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    border:1px solid var(--line);
+    padding:1.4rem 1.5rem;
+  }
+  .selector-label{
+    font-size:.85rem; font-weight:700; color:var(--leaf);
+    display:block; margin-bottom:.6rem;
+  }
+  .select-shell{
+    position:relative;
+  }
+  select{
+    width:100%;
+    appearance:none;
+    -webkit-appearance:none;
+    font-family:inherit;
+    font-size:1.05rem;
+    font-weight:600;
+    color:var(--ink);
+    background:var(--cream);
+    border:2px solid var(--line);
+    border-radius:10px;
+    padding:.95rem 3rem .95rem 1.1rem;
+    cursor:pointer;
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  select:hover{ border-color:var(--leaf-light); }
+  select:focus{
+    outline:none;
+    border-color:var(--leaf);
+    box-shadow:0 0 0 4px rgba(76,107,63,.15);
+  }
+  .select-shell::after{
+    content:"";
+    position:absolute;
+    right:1.1rem; top:50%;
+    width:.6rem; height:.6rem;
+    border-right:2.5px solid var(--leaf);
+    border-bottom:2.5px solid var(--leaf);
+    transform:translateY(-70%) rotate(45deg);
+    pointer-events:none;
+  }
+  .count-hint{
+    margin-top:.7rem; font-size:.82rem; color:var(--muted);
+  }
+
+  /* ===== Main content ===== */
+  main{ max-width:980px; margin:0 auto; padding:0 1.5rem 4rem; }
+
+  .terms-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:1.6rem 1.7rem;
+    margin-bottom:1.8rem;
+  }
+  .terms-heading{
+    font-family:'Tajawal',sans-serif;
+    font-weight:700; font-size:1.15rem; color:var(--soil);
+    margin:0 0 1rem; display:flex; align-items:center; gap:.55rem;
+  }
+  .terms-icon{ font-size:1.1rem; }
+  .terms-list{
+    margin:0; padding:0; list-style:none;
+    counter-reset:term;
+    display:grid; gap:.9rem;
+  }
+  .terms-list li{
+    counter-increment:term;
+    position:relative;
+    padding-right:2.4rem;
+    font-size:.92rem; color:var(--ink);
+  }
+  .terms-list li::before{
+    content:counter(term);
+    position:absolute; right:0; top:.05rem;
+    width:1.7rem; height:1.7rem; border-radius:8px;
+    background:linear-gradient(135deg, var(--wheat), var(--wheat-dark));
+    color:#fff; font-weight:800; font-size:.85rem;
+    display:grid; place-items:center;
+  }
+  .terms-list li strong{
+    color:var(--leaf); display:block; margin-bottom:.15rem;
+  }
+  .terms-footnote{
+    margin:1.2rem 0 0; padding-top:1rem;
+    border-top:1px dashed var(--line);
+    font-size:.85rem; color:var(--muted);
+  }
+
+  #empty-state{
+    text-align:center; padding:3.5rem 1rem; color:var(--muted);
+  }
+  #empty-state .icon{ font-size:2.4rem; margin-bottom:.8rem; }
+  #empty-state p{ margin:0; font-size:.95rem; }
+
+  #company-panel{ display:none; }
+  #company-panel.visible{ display:block; animation:rise .35s ease; }
+  @keyframes rise{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:none;} }
+
+  .company-card{
+    background:var(--card);
+    border-radius:var(--radius);
+    border:1px solid var(--line);
+    box-shadow:var(--shadow);
+    padding:1.8rem;
+    margin-bottom:1.6rem;
+  }
+  .company-name{
+    font-family:'Tajawal',sans-serif;
+    font-weight:900;
+    font-size:1.5rem;
+    color:var(--soil);
+    margin:0 0 .3rem;
+    display:flex; align-items:center; gap:.6rem;
+  }
+  .company-name .leaf-badge{
+    display:inline-grid; place-items:center;
+    width:2.2rem; height:2.2rem; border-radius:8px;
+    background:linear-gradient(135deg, var(--leaf), var(--leaf-light));
+    color:#fff; font-size:1.1rem; flex-shrink:0;
+  }
+  .company-desc{
+    color:var(--ink); font-size:.98rem; margin:.8rem 0 1.3rem;
+    background:var(--cream); border-right:3px solid var(--wheat);
+    padding:.85rem 1rem; border-radius:8px;
+  }
+  .contacts{
+    display:flex; flex-wrap:wrap; gap:.6rem;
+  }
+  .contact-chip{
+    display:flex; align-items:center; gap:.5rem;
+    background:#eef2e2; border:1px solid var(--line);
+    border-radius:999px; padding:.5rem 1rem;
+    font-size:.88rem; font-weight:600; color:var(--soil);
+  }
+  .contact-chip .dot{
+    width:.45rem; height:.45rem; border-radius:50%;
+    background:var(--wheat-dark); flex-shrink:0;
+  }
+  .contact-chip a{ color:inherit; text-decoration:none; }
+  .contact-chip a:hover{ text-decoration:underline; }
+
+  /* product groups */
+  .group{
+    margin-bottom:1.6rem;
+  }
+  .group-title{
+    display:flex; align-items:center; gap:.6rem;
+    font-family:'Tajawal',sans-serif; font-weight:700;
+    font-size:1.15rem; color:var(--leaf); margin:0 0 .9rem;
+  }
+  .group-title::after{
+    content:""; flex:1; height:1px; background:var(--line);
+  }
+  .group-count{
+    font-size:.75rem; font-weight:600; color:#fff;
+    background:var(--leaf); border-radius:999px; padding:.15rem .6rem;
+  }
+
+  .table-scroll{
+    overflow-x:auto;
+    border:1px solid var(--line);
+    border-radius:12px;
+    background:var(--card);
+  }
+  table{
+    width:100%; border-collapse:collapse; font-size:.88rem; min-width:640px;
+  }
+  thead th{
+    background:var(--soil); color:#f4f1e6;
+    padding:.75rem .8rem; text-align:right;
+    font-weight:600; white-space:nowrap;
+    position:sticky; top:0;
+  }
+  tbody td{
+    padding:.7rem .8rem; border-top:1px solid var(--line);
+    vertical-align:top;
+  }
+  tbody tr:nth-child(even){ background:#faf8f0; }
+  tbody tr:hover{ background:#f0f0e0; }
+  td.price-cell{
+    font-weight:800; color:var(--wheat-dark); white-space:nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  td.name-cell{ font-weight:700; color:var(--soil); }
+
+  /* mobile: card-style table */
+  @media (max-width:640px){
+    .table-scroll{ border:none; background:none; overflow-x:visible; }
+    table{ min-width:0; width:100%; }
+    table, thead, tbody, tr, td{ display:block; width:100%; }
+    thead{ display:none; }
+    tbody tr{
+      background:var(--card); border:1px solid var(--line);
+      border-radius:12px; margin-bottom:.8rem; padding:.4rem 0;
+      box-shadow:0 2px 8px -4px rgba(0,0,0,.08);
+    }
+    tbody td{
+      display:flex; justify-content:space-between; align-items:flex-start; gap:1rem;
+      border-top:1px dashed var(--line); padding:.55rem 1rem;
+      text-align:left; word-break:break-word;
+    }
+    tbody td:first-child{ border-top:none; }
+    tbody td::before{
+      content: attr(data-label);
+      font-weight:700; color:var(--muted); font-size:.78rem;
+      flex-shrink:0; text-align:right; max-width:40%;
+    }
+  }
+
+  /* filter chips */
+  .filter-bar{
+    display:flex; flex-wrap:nowrap; gap:.5rem;
+    overflow-x:auto; padding:.15rem .1rem .8rem;
+    -webkit-overflow-scrolling:touch;
+  }
+  .filter-bar::-webkit-scrollbar{ height:5px; }
+  .filter-bar::-webkit-scrollbar-thumb{ background:var(--line); border-radius:10px; }
+  .filter-chip{
+    flex:0 0 auto;
+    font-family:inherit; font-size:.82rem; font-weight:600;
+    color:var(--leaf); background:#eef2e2;
+    border:1px solid var(--line); border-radius:999px;
+    padding:.4rem .95rem; cursor:pointer;
+    transition:background .15s ease, color .15s ease, border-color .15s ease;
+    white-space:nowrap;
+  }
+  .filter-chip:hover{ border-color:var(--leaf-light); }
+  .filter-chip.active{
+    background:var(--leaf); color:#fff; border-color:var(--leaf);
+  }
+  .no-results{
+    text-align:center; padding:1.5rem; color:var(--muted); font-size:.88rem;
+    display:none;
+  }
+
+  footer{
+    text-align:center; padding:2rem 1rem 3rem; color:var(--muted); font-size:.82rem;
+  }
+  footer strong{ color:var(--soil); }
+
+  @media (prefers-reduced-motion: reduce){
+    #company-panel.visible{ animation:none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo-badge">
+      <img src="data:image/png;base64,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" alt="شعار حكومة الشارقة - دائرة الزراعة والثروة الحيوانية">
+    </div>
+    <span class="eyebrow">مبادرة تمكين المزارعين — الحزمة الثانية</span>
+    <h1>دليل مواد ومستلزمات الإنتاج الزراعي للموسم الزراعي 2026</h1>
+    <p class="subtitle">تتقدم دائرة الزراعة والثروة الحيوانية - الشارقة بتزويدكم بدليل مبادرة تمكين المزارعين للحزمة الثانية للموسم الزراعي 2026 للمزارعين المستحقين، بهدف تعزيز الإنتاج المحلي الآمن والمستدام وتمكين المزارعين من الحصول على مستلزمات الإنتاج وفق معايير فنية معتمدة وبأسعار مدعومة.</p>
+  </div>
+</header>
+
+<div class="selector-wrap">
+  <div class="selector-card">
+    <label class="selector-label" for="company-select">اختر الشركة الموردة</label>
+    <div class="select-shell">
+      <select id="company-select">
+        <option value="">— اختر شركة من القائمة —</option>
+      </select>
+    </div>
+    <p class="count-hint" id="count-hint"></p>
+  </div>
+</div>
+
+<main>
+  <section class="terms-card" aria-labelledby="terms-heading">
+    <h2 id="terms-heading" class="terms-heading"><span class="terms-icon">📋</span>أحكام عامة مهمة</h2>
+    <ol class="terms-list">
+      <li>
+        <strong>آلية التسليم:</strong>
+        يتم تحديد طريقة ومكان ووقت تسليم المواد بحسب ما يتفق عليه كل مزارع مع الشركة الموردة، وتلتزم الشركة بما تم الاتفاق عليه مع المستفيد.
+      </li>
+      <li>
+        <strong>فحص المواد عند الاستلام:</strong>
+        عند استلام الشحنة وفق الاتفاق، يتأكد المزارع (أو من يمثله) من مطابقة النوعية والكميات والمواصفات المسجلة في الدليل. أي اختلاف في المواصفات أو الأسعار يجب الإبلاغ عنه في الحال.
+      </li>
+      <li>
+        <strong>التعامل مع العيوب والشكاوى:</strong>
+        في حال وجود تلف أو خلل أو مشكلة في المواد المسلَّمة، يتواصل المزارع مع إدارة الشركة لرفع شكوى رسمية ومتابعة الإجراءات مع الشركة لإصلاح الوضع أو استبدال المواد.
+      </li>
+      <li>
+        <strong>تحسين الخدمة والجودة:</strong>
+        تشجع الدائرة المزارعين على تقديم ملاحظاتهم حول أداء الموردين وجودة المواد، وذلك بهدف تطوير برامج الدعم وضمان الالتزام بالمواصفات الفنية.
+      </li>
+    </ol>
+    <p class="terms-footnote">للاستفسار أو تقديم شكاوى أو ملاحظات، يمكن التواصل مع قنوات الدعم الرسمية لدائرة الزراعة والثروة الحيوانية — حكومة الشارقة.</p>
+  </section>
+
+  <div id="empty-state">
+    <div class="icon">🌾</div>
+    <p>لم يتم اختيار أي شركة بعد. الرجاء اختيار شركة من القائمة أعلاه لعرض تفاصيلها الكاملة.</p>
+  </div>
+  <div id="company-panel"></div>
+</main>
+
+<footer>
+  دائرة الزراعة والثروة الحيوانية — حكومة الشارقة · <strong>الموسم الزراعي 2026</strong>
+</footer>
+
+<script>
+const COMPANIES = [{"name": "شط العرب للمواد الزراعية", "contacts": "المهندس يوسف | 0529388872", "description": "تقوم الشركة بتوفير مجموعة واسعة من أنواع البذور و المبيدات و الاسمدة . | وتتعبر الشركة هي الوكيل الحصري داخل الدولة لهذه المدخلات", "groups": [{"title": "المنتجات", "data": {"headers": ["المادة", "الاسم التجاري", "الوحدة", "بلد المنشأ", "المادة الفعالة", "السعر بعد التمكين | السابق", "السعر بعد التمكين | الجديد"], "rows": [["مبيد حشري عناكبي", "KAMINGXI", "1 LITER", "الصين", "Abamectine 1.8%", "35", "40"], ["مبيد حشري", "SHIYUE", "500 ML", "الصين", "Imidaclopride 35%", "40", "40"], ["مبيد حشري", "GRIAL", "1 LITER", "اسبانيا", "Deltamethrine 2.5%", "60", "65"], ["مبيد حشري", "HAIHU", "250 ML", "الصين", "Indoxcarb 15%", "60", "75"], ["مبيد فطري", "LEGADO", "250 ML", "اسبانيا", "Azoxy strobin 25%", "60", "65"], ["مبيد حشري", "CHANGONG", "1 LITER", "الصين", "Lambda cyhalothrin 5%", "40", "40"], ["مبيد فطري", "Youze", "250 ML", "الصين", "Tobuconazole 43%", "40", "40"], ["مبيد حشري عناكبي", "Suke", "250 ML", "الصين", "Abamectine 2% + spirodiclofen 20%", "55", "55"], ["مبيد حشري", "PLINTO", "1 LITER", "اسبانيا", "Esfenvalerate 2.5%", "70", "85"], ["مبيد حشري", "JoShu", "1 LITER", "الصين", "Deltamethrine 2.5%", "35", "35"], ["مبيد حشري", "NONGFADA", "100g", "الصين", "Acetamiprid 20%", "10", "15"], ["مبيد حشري عضوي", "NEMRAZR", "1 LITER", "الهند", "Neem oil organic", "45", "45"], ["مبيد حشري عضوي", "NONEMA", "1 LITER", "الهند", "Organic oils", "45", "50"], ["جبس زراعي", "EMMAR GYPSUM", "25KG", "عمان", "GYPSUM", "14", "18"], ["كبريت زراعي", "SULFUR MICROSOLFO", "25KG", "أسبانيا", "SULFUR", "90", "135"], ["سماد زراعي", "نتروجين عضوي", "1 kg", "اسبانيا", "نتروجين عضوي %16.29 + أحماض أمينية 95%", "125", "125"], ["أعشاب بحرية", "بايو جب أعشاب بحرية", "1 liter", "االهند", "أعشاب بحرية مع حمض الجبرليك", "75", "75"], ["هيومك أسيد محبب", "HUMIC ACID", "20KG", "الصين", "HUMIC ACID", "80", "80"], ["DAP", "DAP", "50KG", "مصر", "18-46-0", "210", "210"], ["طماطم", "Tomato Dayana F1 (Indeterminate/Round)", "شط العرب", "AgriMax", "1000 بذرة", "375", "375"], ["طماطم", "Tomato Mai Sherry F1 (Indeterminate/Cherry)", "شط العرب", "AgriMax", "500 بذرة", "375", "375"], ["طماطم", "Tomato Infinity F1 (Determinate/Round)", "شط العرب", "AgriMax", "1000بذرة", "90", "90"], ["طماطم", "Tomato Bavaria F1 (Determinate/Beef)", "شط العرب", "AgriMax", "100بذرة", "50", "50"], ["طماطم", "Tomato Romeo F1 (Determinate/Plum)", "شط العرب", "AgriMax", "1000بذرة", "160", "160"], ["خيار", "Cucumber Qaisar F1 (Summer)", "شط العرب", "AgriMax", "500 بذرة", "140", "140"], ["خيار", "Cucumber Sultan (Spring)", "شط العرب", "AgriMax", "500 بذرة", "150", "150"], ["خيار", "Cucumber Ezz (Autumn-spring)", "شط العرب", "AgriMax", "500 بذرة", "140", "140"], ["خيار", "Cucumber Zain (Spring-Summer)", "شط العرب", "AgriMax", "500 بذرة", "150", "150"], ["خيار", "Cucumber Salvador F1", "شط العرب", "AgriMax", "500 بذرة", "90", "90"], ["فلفل", "Lotus Pepper (Blocky Yellow, greenhouse/net house)", "شط العرب", "AgriMax", "500 بذرة", "375", "375"], ["فلفل", "Aseel Pepper (Blocky Red, greenhouse/net house)", "شط العرب", "AgriMax", "500 بذرة", "375", "375"], ["فلفل", "Orange star Pepper (Blocky Orange, greenhouse/net house)", "شط العرب", "AgriMax", "500 بذرة", "375", "375"], ["فلفل", "Giovanni Peeper (Blocky Green, green/net house)", "شط العرب", "AgriMax", "1000 بذرة", "270", "270"], ["فلفل", "General Pepper (Blocky Green, net house/open field)", "شط العرب", "AgriMax", "1000 بذرة", "230", "230"], ["فلفل", "Jawad Pepper (Lomuyo Green, greenhouse/net house)", "شط العرب", "AgriMax", "1000 بذرة", "230", "230"], ["فلفل", "Saif Pepper (Hot pepper, greenhouse/open/net house)", "شط العرب", "AgriMax", "1000 بذرة", "230", "230"], ["فلفل", "Nasa Pepper (Hot pepper, open field/net house)", "شط العرب", "AgriMax", "500 بذرة", "170", "170"], ["بصل", "Red onion (Red Rock, Red short day)", "شط العرب", "AgriMax", "100 جم", "135", "135"], ["بصل", "White onion (White snow, White short day)", "شط العرب", "AgriMax", "100 جم", "135", "135"], ["بامية", "Okra Turbo", "شط العرب", "AgriMax", "250 جم", "65", "70"], ["بامية", "Okra Lady Finger", "شط العرب", "AgriMax", "100 جم", "50", "50"], ["كوسا", "Zucchini Sham Star", "شط العرب", "AgriMax", "1000 بذرة", "140", "140"], ["كوسا", "Zucchini Panorama", "شط العرب", "AgriMax", "500 بذرة", "70", "70"], ["بطيخ", "Hala Melon (Ananas/oval)", "شط العرب", "AgriMax", "500 بذرة", "80", "80"], ["بطيخ", "Lion Melon (Ananas/oval)", "شط العرب", "AgriMax", "500 بذرة", "80", "80"], ["بطيخ", "Jenan Melon (Ananas/oval)", "شط العرب", "AgriMax", "500 بذرة", "80", "80"], ["بطيخ", "Fared Water melon (Crimson/oval)", "شط العرب", "AgriMax", "500 بذرة", "95", "95"], ["بطيخ", "Fahed Water melon (Sugar Baby/Round)", "شط العرب", "AgriMax", "500 بذرة", "95", "95"], ["بطيخ", "Shakespeare Water melon (Charleston/large oblong)", "شط العرب", "AgriMax", "1000 بذرة", "180", "180"], ["فاصوليا", "Rosy Long Bean F1", "شط العرب", "AgriMax", "500 بذرة", "100", "100"], ["فاصوليا", "Bean (Pole)", "شط العرب", "AgriMax", "1 كجم", "80", "80"], ["ذرة", "Corn Super Sweet YAQOUT", "شط العرب", "AgriMax", "10,000 بذرة", "330", "330"], ["قرنبيط", "Cauliflower Ice Rock F1", "شط العرب", "AgriMax", "1000 بذرة", "60", "60"], ["بروكولي", "Broccoli", "شط العرب", "AgriMax", "1000 يذرة", "70", "70"], ["باذنجان", "Barsha Eggplant F1 (Half long, greenhouse/open)", "شط العرب", "AgriMax", "1000 بذرة", "220", "220"], ["باذنجان", "Red Mix Eggplant F1 (Oval round purple&white strips)", "شط العرب", "AgriMax", "1000 بذرة", "230", "230"], ["ملفوف", "Cabbage Agri-Cross F1 (Flat head Green)", "شط العرب", "AgriMax", "2500 بذرة", "120", "120"], ["ملفوف", "Cabbage Lulu Red F1 (Round Head Red)", "شط العرب", "AgriMax", "1000 بذرة", "65", "65"], ["خس", "Lettuce Spain Land F1 (Romain)", "شط العرب", "AgriMax", "5000 بذرة", "170", "170"], ["جزر", "Carrot Remond F1 (Nantes)", "شط العرب", "AgriMax", "100,000 بذرة", "150", "150"], ["سبانخ", "Viro Spinach F1 (Bunching)", "شط العرب", "AgriMax", "1 كجم", "90", "90"], ["فجل أحمر", "Red Radish (Round Head Red)", "شط العرب", "AgriMax", "1 كجم", "45", "45"], ["شمندر أحمر", "Red Beetroot F1 (Globe)", "شط العرب", "AgriMax", "250 جم", "75", "75"], ["جرجير", "Baby Rocca (Baby small leaf)", "شط العرب", "AgriMax", "250 جم", "50", "50"], ["جرجير", "Rocca", "شط العرب", "AgriMax", "1 كجم", "35", "35"], ["جرجير بري", "Baby Rocca Wild (Wild)", "شط العرب", "AgriMax", "250 جم", "200", "325"], ["بقدونس", "Parsley", "شط العرب", "AgriMax", "1 كجم", "45", "45"], ["كزبرة", "Coriander", "شط العرب", "AgriMax", "1 كجم", "35", "35"], ["قرع", "Big Max Squash F1", "شط العرب", "AgriMax", "1000", "200", "200"], ["بابايا", "Pappaya Red Leady Star F1", "شط العرب", "AgriMax", "25", "75", "75"], ["قرع", "Bitter Gourd Ag F1", "شط العرب", "AgriMax", "50 جم", "50", "50"]]}}]}, {"name": "شركة إسناد الزراعية", "contacts": "المهندس وليد | 0551906064", "description": "توفر الشركة أسمدة عضوية ومغذيات تدعم الزراعة العضوية. | وتعبر الشركة هي الوكيل الحصري داخل الدولة لهذه المدخلات", "groups": [{"title": "المنتجات", "data": {"headers": ["المادة", "الاسم التجاري", "الوحدة", "بلد المنشأ", "المادة الفعالة", "السعر بعد التمكين"], "rows": [["مبيد حشري عضوي", "VEMBU | فيمبو", "1 LITER", "الهند", "Neem oil 80 %", "45"], ["هيومك أسيد بودر", "TBIO HUMIKEY | تبو هيومكي", "1 kg", "الصين", "Humic Acid 64.4% Fulvic Acid 26.3% Potassium 10.4%", "35"], ["اعشاب بحرية", "TBIO SEAFER 100 | تيو سيفر 100 سماد اعشاب بحرية", "1 kg", "الصين", "Alginic acid 16 % Potassium 16 % Mannitol 3 % N 0.5 % P 0.3 %", "35"], ["هيومك أسيد محبب", "TBIO HAMINO 100 | تبو هامينو 100 سماد عضوي محبب", "20kg", "الصين", "مادة عضوية %45 هيومك اسيد %20 فولفلك اسيد 10 % نيتروجين عضوي 10 %", "80"], ["Npk", "سوستين npk 4.6.4 سماد عضوي محبب", "22kg", "بريطانيا", "N4% - P6%-K4%- Ca4%- 50%om7% humic acid Mg1% 3%s – 0.5 te", "220"], ["جبس محبب", "جبس محبب", "25kg", "الهند", "كربونات الكالسيوم المائية %17", "50"], ["مصائد لاصقة", "الواح صفراء لاصقة", "10pcs 40X25cm", "كوري", "-", "30"], ["مصائد لاصقة", "الواح زرقاء لاصقة", "10pcs 40X25cm", "كوري", "-", "30"], ["مصائد جاذبة", "مصيدة ذبابة الفاكهة مع فرمون", "1 LITER", "بريطاني", "", "35"], ["مبيد حشري", "لمبدا اريستا 5 أي سي", "1 LITER", "الهند", "Lambda Cyhalothrin 5% EC", "45"], ["شبك تضليل | Shade Net", "شبك تضليل اخضر 75%", "6*100", "كوري", "-", "1350"], ["شبك تضليل | Shade Net", "شبك تضليل اخضر 7570 TO %", "3*100", "كوري", "-", "675"], ["شبك تضليل | Shade Net", "شبك تضليل اخضر | 7570 TO %", "3*50", "كوري", "-", "337.5"], ["شبك تضليل | Shade Net", "شبك تضليل اخضر | 7570 TO %", "5*50", "كوري", "-", "562.5"], ["شبك تضليل | Shade Net", "شبك تضليل اخضر | 7570 TO %", "2*50", "كوري", "-", "225"]]}}]}, {"name": "المزارع المميزة", "contacts": "0508506450 | المهندس احمد", "description": "تقوم الشركة بتصنيع وتصميم المنشآت والانظمة الزراعية وملحقاتها انتاج نباتي وحيواني.", "groups": [{"title": "المنتجات", "data": {"headers": ["S.no.", "المنتج", "التفاصيل", "العسر بعد التمكين"], "rows": [["1", "بيت محمي", "يبلغ طول المحمية 40 متراً وعرض 11.50 متراً وارتفاع 3.20 متراً من الجوانب , و ارتفاع 4 متراً من الوسط | هيكلها المعدني مكون من أنابيب جلفنايز قطر 1.25 بوصة سماكة 2.0 ملم الاعمدة بمواسير بمواسير 1 انش ً مدعمة داخليا 1 انش جلفانايز وسكاشن علوية مدعمة خارجياً جلفانايز والعوارض الحاملة عبارة عن تيوب حديد مربع أسود مصبوغ 1×1 انش. تفصل بين السكاشن مسافة 2.00 متر. | يتم تغطية المحمية بالكامل بألواح البولي كربونات سماكة 4.0 ملم مقاومة لألشعة الشمسية الفوق بنفسجية", "50000"]]}}]}, {"name": "الخريف الأخضر الزراعية", "contacts": "م.خريسات | 0565020404 | م.معاذ | 0565027373", "description": "حيث تقوم الشركة بتوفير الأسمدة والمبيدات الزراعية . | وتتعبر الشركة هي الوكيل الحصري داخل الدولة لهذه المدخلات", "groups": [{"title": "المنتجات", "data": {"headers": ["المادة", "الاسم التجاري", "الوحدة", "بلد المنشأ", "المادة الفعالة", "السعر بعد التمكين السابق", "السعر بعد التمكين | الجديد"], "rows": [["هيومك أسيد محبب", "NATURCOMPLET-G SACO", "25 kg", "اسبانيا", "Organic Granular Fertilizer/ Humic Acid + fulvic acid + potassium + organic matter", "120", "120"], ["هيومك أسيد محبب", "Green solution humic acid", "20 kg", "الصين", "Organic humic acid + fulvic acid", "75", "85"], ["هيومك أسيد بودر", "KY POTASSIUM HUMATE", "1 kg", "الصين", "Organic Powder Fertilizer Humic Acid 70-65 % + fulvic acid 15 %+ potassium 10%", "25", "45"], ["أعشاب بحرية محبب", "SEAWEED EXTRACT", "20kg", "الصين", "Organic Granular Fertilizer/ Seaweed extract 28% + NPK", "75", "110"], ["أعشاب بحرية سائل بالإضافة للعناصر الصغرى والمواد العضوية", "Elfer bioroot", "1 litr", "اسبانيا", "Organic Liquid fertilizer Seaweed extract , Amino acid + mannitol +SO4+TE+organic matter ( Mn, Mo,B,Zn,Fe)", "40", "50"], ["حديد عضوي", "Elfer greenfield", "1 kg", "اسبانيا", "Organic Powder fertilizer Fe 6 % , EDDHA 4.2", "55", "55"], ["عناصر صغرى", "Elfer micro", "1kg", "اسبانيا", "Organic Powder fertilizer Mix TE Fe,B,Mn,Zn.Mo (EDTA &HGA)", "45", "60"], ["أعشاب بحرية سائل", "Elfer algae", "1 lit", "اسبانيا", "Organic Liquid fertilizer Seaweed extract 28% Alginic acid 4% Mannitol 0.7% Organic matter 24%", "40", "45"], ["Npk", "Perfect top humic +npk18-9-9+mgo+s+amino acid +te", "20 kg", "الصين", "Bio-organic fertilizer Granular Fertilizer/ NPK 18.9.9+HUMIC ACID+S+MGO+AMINO ACID +TE", "85", "100"], ["أحماض امينية", "Elfer Vitamino", "1 ltr", "اسبانيا", "Bio-organic fertilizer liquid fertilizer AMINO ACID | Amino Acid 13%+ nitrogen 4%+Fe 0.3% +TE", "40", "45"]]}}]}, {"name": "مصنع أورجانج روكس فيرتليزر", "contacts": "الدكتور: رزق حمزة 0544523634 | ميج فارم - مليحة - المدام – الذيد رقم التواصل: 054-702 5904 | البيئة الخضراء للمواد الزراعية – منطقة كلباء رقم التواصل:055-629 4666 | المستشار للمواد الزراعية – منطقة الزبير رقم التواصل:058-299 8844", "description": "يوفّر المصنع سمادًا صخريًا عضويًا، ويُعد الأول والوحيد من نوعه في العالم العربي الذي يصنع هذه المنتجات", "groups": [{"title": "المنتجات", "data": {"headers": ["المادة", "الاسم التجاري", "الوحدة", "بلد المنشأ", "المادة الفعالة", "السعر بعد التمكين"], "rows": [["سماد عضوي", "Black rocks", "20 kg", "الإمارات العربية المتحدة-دبي", "مجموعة العناصر الغذائية العضوية والمعدنية والصخرية المتكاملة والمتزنة من النيتروجين الطبيعي والفسفور والبوتاسيوم وتحتوي على العناصر الكبرى والصغرى التي تدعم خصوبة التربة ونمو النباتات.", "37"], ["سماد عضوي", "Rich vermicompost", "20 kg", "الإمارات العربية المتحدة-دبي", "المادة الفعالة هي الميكروبيولوجيا الحية والمواد العضوية المتحللة. غني بالكائنات الدقيقة المفيدة من البكتيريا والفطريات النافعة، وهذا اللي بيساعد على تحسين خصوبة التربة وتغذية النباتات.", "34"], ["سماد عضوي", "FISH PLUS", "4 Li", "الإمارات العربية المتحدة-دبي", "المادة الفعالة هنا هي الأحماض الدبالية والأحماض العضوية والأحماض الامينية، هذه الأحماض العضوية تحسّن امتصاص المغذيات من التربة. وهي تعزز نمو النبات وتحسّن من حيوية التربة بشكل عام يحتوي على النيتروجين والفوسفور والبوتاسيوم والعناصر الصغرى", "67"], ["سماد عضوي", "FISH PLUS", "20 Li", "الإمارات العربية المتحدة-دبي", "المادة الفعالة هنا هي الأحماض الدبالية والأحماض العضوية والأحماض الامينية، هذه الأحماض العضوية تحسّن امتصاص المغذيات من التربة. وهي تعزز نمو النبات وتحسّن من حيوية التربة بشكل عام يحتوي على النيتروجين والفوسفور والبوتاسيوم والعناصر الصغرى", "350"], ["سماد عضوي", "ROOKS PLUS", "1 Kg", "الإمارات العربية المتحدة-دبي", "المادة الفعالة هي مزيج الصخور والمواد العضوية والمعدنية يرش على الأوراق ويمدها بالنتروجين الطبيعي والفسفور والبوتاسيوم ويشكل طبقة صخرية تحمي الأوراق من الآفات ويقلل من استخدام المبيدات.", "37"], ["سماد عضوي", "BOOSTER ROCKS", "1Kg", "الإمارات العربية المتحدة-دبي", "المادة الفعالة البوتاسيوم الطبيعي مع الأحماض الطبيعية لزيادة حجم الثمار وتخفيف الجهد النباتي يرش على الأوراق والازهار.", "40"]]}}]}, {"name": "مصنع محمد الماجد للأسمدة", "contacts": "المهندس : زياد | المهندس :محمد | 0549941019 | 0542148150", "description": "يقدم المصنع مجموعة متنوعة من الأسمدة والمغذيات الزراعية المحلية | ويعتبر المصنع من المصانع المحلية الرائدة في هذا المجال", "groups": [{"title": "المنتجات", "data": {"headers": ["النوع", "الاسم التجاري", "الوحدة", "بلد المنشأ", "المادة الفعالة", "السعر بعد التمكين | السابق", "السعر بعد التمكين الجديد"], "rows": [["سمك والاعشاب بحرية", "Super jisa", "1 LITER", "أماراتي", "Organic matter : 33% N :6% P2O5 :6% K2O : 6%", "45", "42.75"], ["أحماض امينية", "Jisa 1", "1 LITER", "أماراتي", "Organic matter : 48% Free amino acids:16% N :9% Zn :0,35% Mn :0,31%", "45", "49.4"], ["سماد سائل", "Nitro phos 60", "1 LITER", "أماراتي", "Organic matter : 24% N :10% P2O5 :26%", "38", "42.75"], ["سماد سائل", "Cabeom", "1 LITER", "أماراتي", "Organic matter : 30% N:10% Cao:15% B=1%", "38", "42.75"], ["سماد سائل", "NITRO GREEN", "1 LITER", "أماراتي", "Organic matter : 41% N :23% P2O5 :6% K2O : 2% Fe :380 ppm Zn :315ppm Mn :300 ppm Cu :90 ppm", "40", "47.5"], ["سماد سائل", "POTASOL K", "1 LITER", "أماراتي", "Organic matter : 30% N : 3% P2O5 : 5% K2O : 14% Fe :400 ppm Zn :250ppm Cu :100 ppm", "40", "47.5"], ["حديد", "Top Fer", "1 kg", "أماراتي", "Fe=6%", "38", "42.75"], ["عناصر صغرى", "Complex Extra", "1 kg", "أماراتي", "Fe:6% Zn:5,2% Mn:5% Mgo=2,7% B=1.06% Cu:0.96%", "38", "42.75"], ["عالي البوتاسيوم", "Agri Pootix", "1 kg", "أماراتي", "Organic matter : 31% K2o:23% Mgo:1% Fe:700 ppm", "42", "49.4"], ["أحماض امينية", "Mared Amino", "1 kg", "أماراتي", "Organic matter : 63% Free amino acids:12% N: 8% P2O5: 4% K2O: 4% Fe : 0.60% Zn : 1.0% Mn : 0.75% Cu : 0.60%", "90", "90.25"], ["عالي الفوسفور", "Agri Rootex", "1Kg", "اماراتي", "N : 8% P2O5 : 47% K2O : 5% Fe :340 ppm Zn :315ppm Mn:260ppm Cu :95 ppm", "42", "49.4"], ["سماد بودرة", "Boro Max", "200g", "أماراتي", "BORON (B) : 34% ZINC (ZN) :5%", "38", "42.75"], ["أحماض امينية", "Mared Amino", "200 g", "أماراتي", "Organic matter : 63% Free amino acids:12% N: 8% P2O5: 4% K2O: 4% Fe : 0.60% Zn : 1.0% Mn : 0.75% Cu : 0.60%", "38", "42.75"], ["سماد سائل سمك", "Al Shabah B 42", "5Kg", "أماراتي", "Organic matter : 42% N : 4.00% P2O5 : 3.50% K2O : 0.38 %", "95", "99.75"], ["سماد سائل", "POTASOL K", "4 LITER", "أماراتي", "Organic matter : 30% N : 3% P2O5 : 5% K2O : 14% Fe :400 ppm Zn :250ppm Cu :100 ppm", "105", "109.25"], ["سماد سائل", "NITRO GREEN", "4 LITER", "أماراتي", "Organic matter : 41% N :23 % P2O5 :6% K2O : 2 % Fe :380 ppm Zn :315ppm Mn :300 ppm Cu :90 ppm", "105", "109.25"], ["سماد سائل", "Nitro phos 60", "4 LITER", "أماراتي", "Organic matter : 24% N :10% P2O5 :26%", "95", "99.75"], ["سماد سائل", "Cabrom", "4 LITER", "أماراتي", "Organic matter : 30% N:10% Cao:15% B=1%", "95", "99.75"], ["أحماض امينية", "Jisa 1", "4 LITER", "أماراتي", "Organic matter : 48% Free amino acids:16% N :9% Zn :0,35% Mn :0,31%", "115", "118.75"], ["سمك والاعشاب بحرية", "Super jisa 3", "4 LITER", "أماراتي", "Organic matter : 33% N :6% P2O5 :6% K2O : 6%", "105", "109.25"], ["سماد سائل", "Nitro phos 60", "15 LITER", "أماراتي", "Organic matter : 24% N :10% P2O5 :26%", "250", "261.25"], ["أحماض امينية", "Jisa 1", "15 LITER", "أماراتي", "Organic matter : 48% Free amino acids:16% N :9% Zn :0,35% Mn :0,31%", "270", "285"], ["سماد سائل", "Carbom", "15 LITER", "أماراتي", "Organic matter : 30% N:10% Cao:15% B=1%", "250", "261.25"], ["سمك والاعشاب بحرية", "Super jisa 3", "15 LITER", "أماراتي", "Organic matter : 33% N :6% P2O5 :6% K2O : 6%", "260", "266"], ["سماد سائل", "NITRO GREEN", "15 LITER", "أماراتي", "Organic matter : 41% N :23% P2O5 :6% K2O : 2% Fe :380 ppm Zn :315ppm Mn :300 ppm Cu :90 ppm", "260", "266"], ["سماد سائل | سمك", "Al Shabah B 42", "15 LITER", "أماراتي", "Organic matter : 42% N : 4.00% P2O5 : 3.50% K2O : 0.38 %", "250", "261.25"], ["سماد سائل", "POTASOL K", "15 LITER", "أماراتي", "Organic matter : 30% N : 3% P2O5 : 5% K2O : 14% Fe :400 ppm Zn :250ppm Cu :100 ppm", "260", "266"]]}}]}, {"name": "شركة الفنية الزراعية", "contacts": "المهندس: احمد | 0504456673", "description": "تقدم الشركة نسبة خصم للمزارعين حيث تقوم الشركة بتوفير مجموعة واسعة من أنواع البذور و المبيدات و الاسمدة . | وتتعبر الشركة هي الوكيل الحصري داخل الدولة لهذه المدخلات", "groups": [{"title": "المنتجات", "data": {"headers": ["السعر بعد التمكين", "التركيب / المادة الفعالة", "بلد المنشأ", "الوحدة", "الاسم التجاري", "النوع"], "rows": [["400", "SEED", "TANZANIA", "1000 بذرة", "ROENZA F1", "بذور طماطم"], ["170", "SEED", "TANZANIA", "بذرة 500", "ZECO", "بذور خيار"], ["85", "SEED", "CHILE", "500 بذرة", "ELYSIA F1", "بذور كوسا"], ["150", "SEED", "ARGENTINA", "بذرة 25,000", "RED COACH", "بذور بصل"], ["105", "SEED", "KENYA", "1000 بذرة", "LOJAIN", "بذور طماطم"], ["255", "SEED", "PERU", "بذرة 1000", "OLYMPUS", "بذور فلفل"], ["260", "SEED", "INDIA", "بذرة 1000", "HYFFAE", "بذور فلفل حار"], ["60", "6% EDDHA ORTHO-IRON", "SPAIN", "1 kg", "ULTRAFERRO", "حديد"], ["60", "Mn 3.65% Zn 0.68% Fe 7.7% Cu 0.27% B 0.62% Mo 0.31%", "SPAIN", "1 kg", "TRADECORP AZ", "عناصر صغرى"], ["45", "HUMIC ACIDS 85% FULVIC ACIDS 16% POTASSIUM OXIDE 9%", "SPAIN", "1 kg", "HUMIVELL POWDER", "هيومك أسيد بودر"], ["55", "Fe 7.16% Mn 3.15% Cu 0.323% Zn 0.616% B 0.523% Mo 0.232%", "SPAIN", "1 kg", "MICROVEL POWDER", "عناصر صغرى"], ["55", "N 11% P 36% K 14% B 0.50% Cu 0.05% Fe 0.10% Mn 0.05% Zn 0.05% Mo 0.20%", "SPAIN", "1 kg", "MANVERT BALTILAN", "Npk"], ["60", "MATRINE 6%", "CHINA", "500 ml", "KING BO 500 ML", "مبيد عضوي"], ["125", "FLUPYRADIFURONE 200 g/l", "GERMANY", "250 ml", "SIVANTO PRIME", "مبيد حشري"], ["105", "SPIROTETRAMAT 90%", "GERMANY", "250 ml", "MOVENTO 100 SC", "مبيد حشري"]]}}]}, {"name": "مابكو لصناعة الاسمدة م.م.ح", "contacts": "المهندس: بشير | 0563505884", "description": "يقدم المصنع مجموعة متنوعة من الأسمدة والمغذيات الزراعية المحلية | ويعتبر المصنع من المصانع المحلية الرائدة في هذا المجال", "groups": [{"title": "المنتجات", "data": {"headers": ["النوع", "الاسم التجاري", "الوحدة", "المادة الفعالة", "السعر بعد التمكين السابق", "السعر بعد التمكين الجديد"], "rows": [["NPK", "MAPCO GRAN NPK 18.18.5", "25 KG BAG", "محبب", "38", "57"], ["NPK", "MAPCO GRAN NPK 12.12.17", "25 KG BAG", "محبب", "52", "61.75"], ["سوبر فوسفات", "Single Super Phosphate", "50 KG BAG", "محبب", "40", "47.5"], ["NPK", "MAPCO GRAN NPK 15.15.15", "25 KG BAG", "محبب", "66", "80.75"], ["NPK8", "PALM BOOST 14.8.22", "25 KG BAG", "محبب", "65", "80.75"], ["NPK", "MAPCO GREEN MIX | NPK 28.14.14", "25 KG BAG", "بودر", "80", "104.5"], ["NPK", "MAPCO GREEN MIX | NPK 20.20.20", "25 KG BAG", "بودر", "90", "114"], ["NPK", "MAPCO GREEN MIX | NPK 12.4.24", "25 KG BAG", "بودر", "95", "109.25"], ["NPK", "MAPCO GREEN MIX | NPK 12.12.36", "25 KG BAG", "بودر", "125", "128.25"], ["نترات البوتاسيوم", "POTASSIUM NITRATE", "25 KG BAG", "بودر", "140", "114"], ["سلفات بوتاسيوم", "POTASSIUM SULPHATE", "25 KG BAG", "بودر", "95", "104.5"], ["سلفات المغنيسيوم", "MAGNESIUM SULPHATE", "25 KG BAG", "بلورات ذائبة", "38", "61.75"], ["حديد", "TE MIX", "1 KG PKT", "بودر", "33", "42.75"], ["شيلات الزنك", "ZN CHELATED", "1 KG PKT", "بودر", "33", "38"], ["شيلات المنغنيز", "MN CHELATED", "1 KG PKT", "بودر", "33", "38"], ["شيلات النحاس", "CU CHELATED", "1 KG PKT", "بودر", "38", "47.5"], ["بوريك أسيد", "BORIC ACID", "1 KG PKT", "بودر", "23", "28.5"], ["شيلات الحديد", "FE CHELATED 4.8", "1 KG PKT", "بودر", "40", "42.75"], ["NPK", "NPK 10.52.10 1KG", "1 KG PKT", "بودر", "12", "19"], ["NPK", "NPK 12.12.36 1KG", "1 KG PKT", "بودر", "12", "14.25"], ["NPK", "FOLIAR 20.20.20", "1 KG PKT", "بودر", "12", "14.25"], ["NPK", "NPK 12.12.17 5KG", "5 KG PKT", "محبب", "18", "20.9"], ["NPK", "NPK 18.18.5 5KG", "5 KG PKT", "محبب", "15", "19"], ["معالج الملوحة", "MAPCO SALINE", "20 LTR GALLON", "سائل", "60", "85.5"], ["فسفوريك أسيد", "PHOSPHORIC ACID", "20 LTR GALLON", "سائل", "95", "99.75"]]}}]}, {"name": "الواحة الخضراء", "contacts": "م. وليد حمور | 0558747654 | م. إياد خفاجة 0507935870", "description": "ستقوم الشركة بتقديم نسبة خصم للمزارعين حيث تقوم الشركة بتوفير مجموعة واسعة من أنواع البذور و المبيدات و الاسمدة . | وتتعبر الشركة هي الوكيل الحصري داخل الدولة لهذه المدخلات", "groups": [{"title": "الأسمدة والمغذيات", "data": {"headers": ["النوع", "الاسم التجاري", "المادة الفعالة ونسبته", "بلد المنشأ", "الوحدة", "السعر بعد التمكين"], "rows": [["عناصر صغرى عضوي", "Dispers Complex Synergy", "Fe=5%, Cu=0.5%, Mn=4%,Mg=2%,Zn=0.6%, | B=0.7%,Mo=0.3%", "إسبانيا", "1 كجم", "55"], ["كالسيوم عضوي", "Dispers Ca Synergy", "Ca18%", "إسبانيا", "1 كجم", "60"], ["نحاس عضوي", "Dispers Cu Max", "Cu14%", "إسبانيا", "1 كجم", "85"], ["حديد عضوي", "Dispers Fe 6% GS", "Fe6%", "إسبانيا", "1 كجم", "55"], ["أحماض أمينية عضوي", "Dispers Chrophyll GS", "Free amino acid 60 % molybdenum (MO), Soluble in water 2 % total nitrogen (N) 15 %", "إسبانيا", "0.5 كجم", "160"], ["أسمدة عضوية هيومك", "Dispers Osmotic GS", "Humic extracts 65 %+Humic acids 26 % | Fulvic acids 39 % | Total water-soluble calcium (CaO) 4.2 % | Water-soluble Potassium (K2O) 12.5 % | Total nitrogen (N) 2.5 %", "إسبانيا", "1 كجم", "160"], ["كالسيوم بورون عضوي", "Disper CaB Sinergy", "Calcium (CaO) total soluble in water - 15.00% | * Calcium (CaO) complexed with LS - 11.48% | * Calcium (CaO) chelated with EDTA - 3.52% | Boron - 3.00%", "إسبانيا", "1 كجم", "60"], ["مغنسيوم عضوي", "Magnesiogreen Avanzo", "Magnesium oxide 15.5 % W/W | Sulfur trioxide (SO3) 31 % W/W | Boron 0.5 % W/W | Copper 0.1% W/W | Manganese 0.1 % W/W | Zinc 0.15 % W/W", "إيطاليا", "1 كجم", "50"], ["أسمدة عضوية", "Algaren Twin", "Organic Carbon (C ) w/w14 % | Organic Nitrogen (N) w/w2 % | Organic matter w/w30 %", "إيطاليا", "1 لتر", "65"], ["أسمدة عضوية", "Eranthis", "Organic Carbon (C ) w/w14 % | Organic Nitrogen (N) w/w2 % | Organic matter w/w30 %", "إيطاليا", "1 لتر", "65"], ["أسمدة عضوية", "GLOBBER", "Organic Carbon(C )w/w27% | Organic matter w/w47 % | Dry matter w/w13.5 % | Total Nitrogen <0.2", "إسبانيا", "500 مل", "70"], ["أحماض أمينية عضوية", "Terramin", "N=7.2%, Free Amino acid= 12%, Organic matter=48%", "إسبانيا", "5 لتر", "135"], ["أحماض أمينية عضوي", "Terrasorb Organic", "Amino acid- 20%, | Organic Nitrogen-5.5% | Fe – 1% +TE", "إسبانيا", "1 لتر", "40"], ["أحماض أمينية عضوي", "Equilibrium", "Amino acid- 15% | Seaweed -10% | Organic Nitrogen-3.5% | K2O -2.5%", "إسبانيا", "1 لتر", "50"], ["أسمدة عضوية", "Greengrow AA-30", "Free Amino Acid 30 % | Total Nitrogen 7.8% | 1.4 % AMMONIACAL NITROGEN 4.4 % ORGANIC NITROGEN | 1.5 % URIC NITROGEN", "إيطاليا", "1 لتر | 5لتر", "35 | 110"], ["أسمدة عضوية", "Surnan", "Nitrogen 2.5 % organic carbon 13.8 %", "إيطاليا", "1 لتر", "50"], ["هيومك أسيد محبب عضوي", "Perlhumus", "Humic acid + Fulvic acid=60%", "ألمانيا", "20 كجم", "95"], ["هيومك اسيد بودر عضوي", "Powhumus 85 WGS", "Humic acid + Fulvic acid=65%", "ألمانيا", "1 كجم", "55"], ["بوتاسيوم عضوي", "Vit Org V G", "Organic Nitrogen (N) 2% | Potassium Oxide (K2O) water soluble 6% | Organic Carbon (C ) 15 % | Organic matter 33 % - Amino Acids 10 %", "إيطاليا", "1 لتر", "40"], ["NPK", "Quadro 10.50.10+TE", "Total Nitrogen= 10 % - P2O5=50% K2O=10% | with trace elements", "إيطاليا", "25 كجم", "235"], ["NPK", "Quadro 28.14.14+TE", "Total Nitrogen= 28 % P2O5=14% | K2O=14% - with trace elements", "إيطاليا", "25 كجم", "180"], ["NPK", "Quadro 6.6.40+2 Mg+TE", "Total Nitrogen= 6 % P2O5=6% K2O=40% - with trace elements", "إيطاليا", "25 كجم", "180"], ["سماد ورقي", "FERROLIV", "Total Nitrogen= 3% | Total phosphoric anhydride (P2O5)=22% | Water-soluble potassium oxide (K20)=30% | Iron (Fe) chelated with 0-0] EDDHA, water-soluble=1.6% | Copper (Cu) chelated with EDTA water-soluble=0.1% | Boron (B) in acid form,water-soluble=0.1% | Manganese (Mn) chelated with EDTA. water-soluble=0.1% | Zinc (Zn) chelated with EDTA, water-soluble=0.1%", "إيطاليا", "1 كجم", "70"], ["سماد فسفور اوكسيد بوتاسيوم", "SOLVERIX 0-33-42", "(P2O5) :33% (K2O) : 42 %", "إيطاليا", "1 لتر | 5 لتر", "40 | 130"], ["سماد ورقي", "Nutri Leaf 20.20.20", "Total Nitrogen=20% | Available Phosphoric acid (P2O5)- 20% | Soluble Potash(K2O)-20% | with trace elements", "أمريكا", "2.25كجم/باكيت", "65"], ["سماد كالسيوم", "Calciogreen Ps Plus", "Calcium oxide(CaO) 40% w/w Formate 64% w/w", "إيطاليا", "1 كجم", "40"], ["سماد نيتروجينى", "Inicium", "Organic matter = 40% + | Total Nitrogen= 5.5% - Phosphorous= 5%", "اسبانيا", "1 لتر", "40"], ["سماد عضوي", "Bioptimus", "Pseudomonas putida strain PSP.L2.07: 1x108 cfu/m", "اسبانيا", "1 لتر", "60"], ["سماد حيوي بكتيريا", "Bioscience PHP", "Bacillus Licheniformis 4.8E6 CFU/ML | Bacillus Subtilis 9.6E6 CFU/ML | Bacillus Megaterium 9.6E6 CFU/ML | N 0.5 % -P 0.5 % - K 0.5 % | TotalOrganic Compound from biofermenation 5 %", "كندا", "1 لتر", "75"], ["سماد حيوي بكتيريا", "Bio Tec 777", "Bacillus Licheniformis 4.8E6 CFU/ML | Bacillus Subtilis 9.6E6 CFU/ML | Bacillus Megaterium 9.6E6 CFU/ML | N 1 % -P 10 % | TotalOrganic Compound from biofermenation 5 %", "كندا", "1 لتر", "85"], ["سماد اعشاب بحرية", "DOUBLE WIN 10 –10 –10", "NITROGEN :10% | Potassium Oxide (K2O) :10% | Phosphorous Oxide ( P2O5) :10 %", "الصين", "20 كجم", "90"], ["سماد محبب", "PRIMEPHOS", "Total P2O5 (Dry basic) : 29% | P2O5 soluble in citric acid 2% : 23%", "اندونيسيا", "20 كجم", "90"]]}}, {"title": "المبيدات", "data": {"headers": ["النوع", "الاسم التجاري", "المادة الفعالة ونسبته", "بلد المنشأ", "الوحدة", "السعر بعد التمكين"], "rows": [["مبيد حشري عضوي", "Laincoi", "Paraffinic oil 79% EC", "إسبانيا", "1 لتر", "40"], ["مبيد حشري متخصص", "Abalar", "Esfenvalerate 2.6 EC", "إسبانيا", "1 لتر", "80"], ["مبيد حشري عام", "Infiss", "Deltamethrin 2.5 % EC", "إسبانيا", "1 لتر", "60"], ["مبيد فطري ، التربس ، العناكب الحمراء", "Rufast 75 EW", "Acrinathrin 7% EW", "المانيا", "250 مل", "160"], ["مبيد عناكبي متخصص", "Nichino Hachi Hachi", "Tolfenpyrad 15% EC", "اليابان", "500 مل", "130"], ["مبيد عناكب متخصص", "Floramite SC", "Bifenazate 24% SC", "أمريكا", "250 مل", "150"], ["مبيد عناكبي متخصص", "Kanemite", "Acequinocyl 15% SC", "اليابان", "500 مل", "130"], ["مبيد حشري عام", "Laotta", "Abamectin 1.8% EC", "إسبانيا", "1 لتر", "55"], ["مبيد فطري سائل", "Beltanol", "Chinosol 50% SL | (8-Hydroxy Quinolein sulphate) 375 g/L", "إسبانيا", "500 مل", "80"], ["مبيد حشري", "Fungistop", "Sulfar 72%", "إسبانيا", "1 لتر", "40"], ["مبيد حشري", "Cornalina", "Acetamipride 20% SP", "إسبانيا", "ا كجم", "65"], ["مبيد فطري بودر عضوي", "Cobre Lainco", "Copper oxychloride 50% WP", "إسبانيا", "1 كجم", "55"], ["مبيد فطري سائل عضوي", "Cupra", "Copper oxychloride 52% SC", "إسبانيا", "1 لتر", "55"], ["مبيد فطري عام", "Sivar Gold", "Azoxytrobin 6.25% W/V | Potassium phosphonate 25.5% W/V", "إسبانيا", "1 لتر", "70"], ["مبيد فطري", "Rival Duo", "400 (g/L) Propamocarb | Cymoxanil (g/L) 50", "بلغاريا", "500 مل", "65"], ["مبيد", "Cuneb", "potassium phosphate 51% inert ingredient 49%", "إسبانيا", "1 لتر", "40"], ["مبيد عشبي", "NITIDE", "20% Fluroxypyr W/V | (as 1-methyle heptyl ester)", "إسبانيا", "1 لتر", "80"]]}}]}];
+
+const select = document.getElementById('company-select');
+const panel = document.getElementById('company-panel');
+const emptyState = document.getElementById('empty-state');
+const countHint = document.getElementById('count-hint');
+
+// populate dropdown
+COMPANIES.forEach((c, i) => {
+  const opt = document.createElement('option');
+  opt.value = i;
+  opt.textContent = c.name;
+  select.appendChild(opt);
+});
+
+const totalProducts = COMPANIES.reduce((sum, c) => sum + c.groups.reduce((s,g)=>s+g.data.rows.length,0), 0);
+countHint.textContent = `${COMPANIES.length} شركة مسجّلة · ${totalProducts} مادة ومستلزم إنتاج بالإجمالي`;
+
+function escapeHtml(str){
+  return (str ?? '').toString()
+    .replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+}
+
+function isPriceHeader(h){
+  return h.includes('السعر');
+}
+
+// find the column that represents the material "type" (النوع / المادة, but not المادة الفعالة)
+function findTypeColIndex(headers){
+  let idx = headers.findIndex(h => h.trim() === 'النوع');
+  if(idx === -1) idx = headers.findIndex(h => h.trim() === 'المادة');
+  return idx;
+}
+
+function renderTable(group, groupId){
+  const headers = group.data.headers;
+  const rows = group.data.rows;
+  const priceIdx = new Set(headers.map((h,i)=> isPriceHeader(h) ? i : -1).filter(i=>i>=0));
+  const nameIdx = headers.findIndex(h => h.includes('الاسم التجاري'));
+  const typeIdx = findTypeColIndex(headers);
+
+  let thead = '<thead><tr>' + headers.map(h => `<th>${escapeHtml(h)}</th>`).join('') + '</tr></thead>';
+  let tbody = '<tbody>' + rows.map((r,ri) => {
+    const typeVal = typeIdx >= 0 ? (r[typeIdx] || '').trim() : '';
+    return `<tr data-type="${escapeHtml(typeVal)}">` + r.map((cell,i) => {
+      const cls = priceIdx.has(i) ? 'price-cell' : (i===nameIdx ? 'name-cell' : '');
+      const label = escapeHtml(headers[i] ?? '');
+      const val = escapeHtml(cell) || '—';
+      return `<td class="${cls}" data-label="${label}">${val}</td>`;
+    }).join('') + '</tr>';
+  }).join('') + '</tbody>';
+
+  let filterBar = '';
+  if(typeIdx >= 0){
+    const types = [...new Set(rows.map(r => (r[typeIdx]||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare('ar'));
+    if(types.length > 1){
+      filterBar = `<div class="filter-bar" data-group="${groupId}">
+        <button class="filter-chip active" data-value="__all__">الكل (${rows.length})</button>
+        ${types.map(t => `<button class="filter-chip" data-value="${escapeHtml(t)}">${escapeHtml(t)}</button>`).join('')}
+      </div>`;
+    }
+  }
+
+  return `${filterBar}<div class="table-scroll"><table>${thead}${tbody}</table><p class="no-results">لا توجد مواد مطابقة لهذا التصنيف</p></div>`;
+}
+
+function attachFilterHandlers(root){
+  root.querySelectorAll('.filter-bar').forEach(bar => {
+    const groupId = bar.dataset.group;
+    const table = root.querySelector(`#group-${groupId} table`);
+    const countBadge = root.querySelector(`#group-${groupId} .group-count`);
+    const noResults = root.querySelector(`#group-${groupId} .no-results`);
+    const rows = [...table.querySelectorAll('tbody tr')];
+
+    bar.addEventListener('click', (e) => {
+      const btn = e.target.closest('.filter-chip');
+      if(!btn) return;
+      bar.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      const value = btn.dataset.value;
+      let visible = 0;
+      rows.forEach(r => {
+        const show = value === '__all__' || r.dataset.type === value;
+        r.style.display = show ? '' : 'none';
+        if(show) visible++;
+      });
+      if(countBadge) countBadge.textContent = visible;
+      noResults.style.display = visible === 0 ? 'block' : 'none';
+      table.style.display = visible === 0 ? 'none' : '';
+    });
+  });
+}
+
+function renderCompany(idx){
+  if(idx === '' || idx === null || idx === undefined){
+    panel.classList.remove('visible');
+    panel.innerHTML = '';
+    emptyState.style.display = 'block';
+    return;
+  }
+  const c = COMPANIES[idx];
+  emptyState.style.display = 'none';
+
+  const contactsHtml = c.contacts.split('|').map(s=>s.trim()).filter(Boolean).map(item => {
+    const phoneMatch = item.match(/0\d{8,9}/);
+    if(phoneMatch){
+      const phone = phoneMatch[0];
+      const label = item.replace(phone,'').trim();
+      return `<span class="contact-chip"><span class="dot"></span>${label ? escapeHtml(label)+' — ' : ''}<a href="tel:${phone}">${phone}</a></span>`;
+    }
+    return `<span class="contact-chip"><span class="dot"></span>${escapeHtml(item)}</span>`;
+  }).join('');
+
+  const groupsHtml = c.groups.map((g,gi) => {
+    const groupId = `${idx}-${gi}`;
+    return `
+    <div class="group" id="group-${groupId}">
+      <h3 class="group-title">${escapeHtml(g.title)} <span class="group-count">${g.data.rows.length}</span></h3>
+      ${renderTable(g, groupId)}
+    </div>
+  `;
+  }).join('');
+
+  panel.innerHTML = `
+    <div class="company-card">
+      <h2 class="company-name"><span class="leaf-badge">🌿</span>${escapeHtml(c.name)}</h2>
+      <div class="company-desc">${escapeHtml(c.description)}</div>
+      <div class="contacts">${contactsHtml}</div>
+    </div>
+    ${groupsHtml}
+  `;
+  panel.classList.add('visible');
+  attachFilterHandlers(panel);
+}
+
+select.addEventListener('change', (e) => {
+  renderCompany(e.target.value);
+  if(e.target.value !== ''){
+    setTimeout(()=> panel.scrollIntoView({behavior:'smooth', block:'start'}), 60);
+  }
+});
+</script>
+</body>
+</html>
